@@ -7,13 +7,15 @@ app = Flask(__name__)
 @app.route("/")
 def main():
     return '''
-     <form action="/echo_user_input" method="POST">
+     <form action="/carbon-emission-report" method="POST">
          <input name="user_input">
-         <input type="submit" value="Submit!">
+         <input type="submit" value="Enter the resource (ie. VM, Storage, etc.) to get Carbon Emission Report">
      </form>
      '''
 
-@app.route("/echo_user_input", methods=["POST"])
-def echo_input():
+@app.route("/carbon-emission-report", methods=["POST"])
+def getCarbonEmissionReport():
     input_text = request.form.get("user_input", "")
-    return "You entered: " + input_text
+    if not input_text:
+        return "Please enter a resource to get Carbon Emission Report"
+    return "Carbon Emission report is current not available for the resource: " + input_text
