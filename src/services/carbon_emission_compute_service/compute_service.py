@@ -25,6 +25,5 @@ class CarbonEmissionComputeServiceInterface:
     def run(self):
         while True:
             emission_report = self._getNextReport()
-            print (emission_report)
             self._publishReport(emission_report)
         

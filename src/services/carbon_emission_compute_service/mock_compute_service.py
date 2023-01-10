@@ -6,7 +6,7 @@ import random
 import time
 import threading
 
-from carbon_emission_compute_service import CarbonEmissionComputeServiceInterface
+from src.services.carbon_emission_compute_service.compute_service import CarbonEmissionComputeServiceInterface
 
 class VMMonitoringMockDataGenerator:
     def __init(self):
@@ -51,6 +51,7 @@ class MockCarbonEmissionComputerSerice(CarbonEmissionComputeServiceInterface):
         }
 
 if __name__ == "__main__":
+    print("Running carbon emission compute service")
     mock = MockCarbonEmissionComputerSerice()
     mock.run()
         

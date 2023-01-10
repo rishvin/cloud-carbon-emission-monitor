@@ -20,7 +20,5 @@ class CarbonEmissionStorageService:
 if __name__ == "__main__":
     daemon = Pyro4.Daemon(host="localhost", port=57654)
     uri = daemon.register(Pyro4.expose(CarbonEmissionStorageService), "CarbonEmissionStorageService")
-    print("Ready. Object uri =", uri)
-
-    # Start the event loop of the server to wait for calls
+    print("Running carbon emission ephimeral storage service at url =", uri)
     daemon.requestLoop()

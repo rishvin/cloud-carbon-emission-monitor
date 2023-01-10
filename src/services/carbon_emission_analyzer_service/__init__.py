@@ -1,4 +1,4 @@
-import sys
-sys.path.append('../')
-
-import carbon_emission_storage_service 
+# import sys
+# sys.path.append('../')
+# print("the path")
+# print(os.path.dirname(__file__))

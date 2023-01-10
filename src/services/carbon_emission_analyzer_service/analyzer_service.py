@@ -2,10 +2,7 @@ import pika
 import json
 import Pyro4
 
-import sys
-sys.path.append('../')
-
-from carbon_emission_storage_service.carbon_emission_storage_service import CarbonEmissionStorageService
+from src.services.carbon_emission_storage_service.ephimeral_storage_service import CarbonEmissionStorageService
 
 class CabonEmissionAnalyzerService:
     def __init__(self):
@@ -28,6 +25,7 @@ class CabonEmissionAnalyzerService:
             emission_report["carbon_emission_rate"] = "low"
 
         self._storage_service.storeReport(emission_report["vm_id"], emission_report)
+        print("Analyzed report for vm_id =", emission_report)
 
     def run(self):
         self._channel.basic_consume(
@@ -36,7 +34,7 @@ class CabonEmissionAnalyzerService:
             auto_ack=True)
         self._channel.start_consuming()
 
-
 if __name__ == "__main__":
+    print("Running carbon emission analyzer service")
     service = CabonEmissionAnalyzerService()
     service.run()
