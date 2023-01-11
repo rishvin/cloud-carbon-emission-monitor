@@ -14,6 +14,9 @@ class CarbonEmissionStorageService:
         vm_report[report["timestamp"]] = report
         vm_to_carbon_emission[vm_id] = vm_report
 
+    def listVMs(self):
+        return list(vm_to_carbon_emission.keys())
+
     def getReport(self, vm_id):
         if vm_id not in vm_to_carbon_emission:
             return []
