@@ -51,7 +51,6 @@ class MockCarbonEmissionComputerSerice(CarbonEmissionComputeServiceInterface):
         }
 
 if __name__ == "__main__":
-    print("Running carbon emission compute service")
     mock = MockCarbonEmissionComputerSerice()
     mock.run()
         

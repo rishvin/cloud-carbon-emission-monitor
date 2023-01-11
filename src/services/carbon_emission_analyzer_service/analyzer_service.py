@@ -2,7 +2,7 @@ import pika
 import json
 import Pyro4
 
-from src.services.carbon_emission_storage_service.ephimeral_storage_service import CarbonEmissionStorageService
+from termcolor import colored
 
 class CabonEmissionAnalyzerService:
     def __init__(self):
@@ -23,9 +23,12 @@ class CabonEmissionAnalyzerService:
             emission_report["carbon_emission_rate"] = "medium"
         else:
             emission_report["carbon_emission_rate"] = "low"
+        
+        try:
+            self._storage_service.storeReport(emission_report["vm_id"], emission_report)
+        except Exception as ex:
+            print(colored("Error while storing report for vm-id: {}, reason: {}".format(emission_report["vm_id"], ex), "red"))
 
-        self._storage_service.storeReport(emission_report["vm_id"], emission_report)
-        print("Analyzed report for vm_id =", emission_report)
 
     def run(self):
         self._channel.basic_consume(
@@ -35,6 +38,5 @@ class CabonEmissionAnalyzerService:
         self._channel.start_consuming()
 
 if __name__ == "__main__":
-    print("Running carbon emission analyzer service")
     service = CabonEmissionAnalyzerService()
     service.run()
