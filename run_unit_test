@@ -1,0 +1,3 @@
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+pytest src/services/carbon_emission_storage_service/test_ephimeral_storage_service.py

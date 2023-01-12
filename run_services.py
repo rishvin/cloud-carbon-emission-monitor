@@ -1,7 +1,4 @@
-import multiprocessing
 import subprocess
-import os
-import sys
 import psutil
 import time
 
@@ -9,23 +6,23 @@ from termcolor import colored
 
 if __name__ == '__main__':
 	services_info = [
-	{
-		"name": "storage_service", 
-		"args": ["python", "-m", "src.services.carbon_emission_storage_service.ephimeral_storage_service"]
-	},
-	{
-		"name": "compute_service", 
-		"args": ["python", "-m", "src.services.carbon_emission_compute_service.mock_compute_service"]
-	},
-	{
-		"name": "analyzer_service", 
-		"args": ["python", "-m", "src.services.carbon_emission_analyzer_service.analyzer_service"]
-	},
-	{
-		"name": "carbon_emission_web_app", 
-		"args": ["Flask", "run", "--port=50000"],
-		"message": "Access the web app at http://localhost:50000"
-	},
+		{
+			"name": "storage_service", 
+			"args": ["python", "-m", "src.services.carbon_emission_storage_service.ephimeral_storage_service"]
+		},
+		{
+			"name": "compute_service", 
+			"args": ["python", "-m", "src.services.carbon_emission_compute_service.vm_compute_service"]
+		},
+		{
+			"name": "analyzer_service", 
+			"args": ["python", "-m", "src.services.carbon_emission_analyzer_service.analyzer_service"]
+		},
+		{
+			"name": "carbon_emission_web_app", 
+			"args": ["Flask", "run", "--port=50000"],
+			"message": "Access the web app at http://localhost:50000"
+		},
 	]
 
 	print(colored("\n+++++++++++++++++++ Running Services +++++++++++++++++++\n", "yellow"))

@@ -1,6 +1,7 @@
 import pika
 import json
 import Pyro4
+import sys
 
 from termcolor import colored
 
