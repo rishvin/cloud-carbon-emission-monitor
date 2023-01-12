@@ -24,6 +24,7 @@ def services():
     runningServices = []
     for service_info in services_infos:
         service = subprocess.Popen(service_info["args"])
+        assert service.pid > 0
         runningServices.append(service)
         time.sleep(0.5)
 
@@ -34,7 +35,7 @@ def services():
 
 def test_list_and_get_report(services):
     running_services = services
-    time.sleep(1)
+    time.sleep(5)
 
     storage_service = Pyro4.Proxy(uri = "PYRO:CarbonEmissionStorageService@localhost:57654")
     try:
