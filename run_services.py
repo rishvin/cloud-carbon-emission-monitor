@@ -20,7 +20,7 @@ if __name__ == '__main__':
 		},
 		{
 			"name": "carbon_emission_web_app", 
-			"args": ["Flask", "run", "--port=50000"],
+			"args": ["flask", "run", "--port=50000"],
 			"message": "Access the web app at http://localhost:50000"
 		},
 	]
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 		if "message" in service_info:
 			print(colored(service_info["message"], "blue"))
 		runningServices.append((service_info["name"], service))
-		time.sleep(1)
+		time.sleep(2)
 
 	killedServices = []
 	while len(killedServices) < len(runningServices):

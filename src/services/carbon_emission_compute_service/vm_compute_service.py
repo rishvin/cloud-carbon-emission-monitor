@@ -10,7 +10,7 @@ import sys
 class CarbonEmissionComputeServiceInterface:
     def __init__(self):
         self._queue_name = "carbon_emission_compute_queue"
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+        self._connection = pika.BlockingConnection(pika.ConnectionParameters("127.0.0.1"))
         self._channel = self._connection.channel()
         self._channel.queue_declare(self._queue_name)
     
