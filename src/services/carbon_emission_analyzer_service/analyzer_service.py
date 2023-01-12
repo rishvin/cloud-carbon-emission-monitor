@@ -8,7 +8,7 @@ from termcolor import colored
 class CabonEmissionAnalyzerService:
     def __init__(self):
         self._queue_name = "carbon_emission_compute_queue"
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+        self._connection = pika.BlockingConnection(pika.ConnectionParameters("localhost", 5672))
         self._channel = self._connection.channel()
         self._channel.queue_declare(self._queue_name)
         self._storage_service = Pyro4.Proxy(uri = "PYRO:CarbonEmissionStorageService@localhost:57654")

@@ -35,7 +35,7 @@ def services():
 
 def test_list_and_get_report(services):
     running_services = services
-    time.sleep(5)
+    time.sleep(2)
 
     storage_service = Pyro4.Proxy(uri = "PYRO:CarbonEmissionStorageService@localhost:57654")
     try:
