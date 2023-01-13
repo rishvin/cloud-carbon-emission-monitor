@@ -1,10 +1,24 @@
 import subprocess
 import psutil
 import time
+import atexit
+import sys
 
 from termcolor import colored
 
 if __name__ == '__main__':
+	runningServices = []
+
+	def cleanup():
+		for service_name, service in runningServices:
+			try:
+				service.kill()
+				print(colored("Killed service: {}".format(service_name), "red"))
+			except Exception as ex:
+				pass
+	
+	atexit.register(cleanup)
+	
 	services_info = [
 		{
 			"name": "storage_service", 
@@ -20,13 +34,12 @@ if __name__ == '__main__':
 		},
 		{
 			"name": "carbon_emission_web_app", 
-			"args": ["flask", "run", "--port=50000"],
-			"message": "Access the web app at http://localhost:50000"
+			"args": ["python", "-m", "src.apps.carbon_emission_app"],
+			"message": "Follow the flask app link to access the app."
 		},
 	]
 
 	print(colored("\n+++++++++++++++++++ Running Services +++++++++++++++++++\n", "yellow"))
-	runningServices = []
 	for service_info in services_info:
 		service = subprocess.Popen(service_info["args"])
 		print(colored("Service: {} started with pid: {} ".format(service_info["name"], service.pid), "green"))
@@ -34,21 +47,12 @@ if __name__ == '__main__':
 			print(colored(service_info["message"], "blue"))
 		runningServices.append((service_info["name"], service))
 		time.sleep(2)
-
-	killedServices = []
-	while len(killedServices) < len(runningServices):
+	
+	while True:
 		for service_name, service in runningServices:
-			if len(killedServices) > 0:
-				if service_name not in killedServices:
-					service.kill()
-					killedServices.append(service_name)
-				continue
-
-			psutil_process = psutil.Process(service.pid)
-			if not psutil_process.is_running():
-				print(colored("FATAL: Service: '{}' stopped running. Killing other services".format(service_name), "red"))
-				killedServices.append(service_name)
-				continue
-
 			time.sleep(1)
-
+			
+			psutil_process = psutil.Process(service.pid)
+			if not psutil_process.is_running() or psutil_process.status() == psutil.STATUS_ZOMBIE:
+				print(colored("FATAL: Service: '{}' stopped running. Killing other services".format(service_name), "red"))
+				sys.exit(1)

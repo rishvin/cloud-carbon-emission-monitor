@@ -1,9 +1,9 @@
 import json
+import Pyro4
 
 from flask import Flask, request
-
+from os import environ
 from termcolor import colored
-import Pyro4
 
 app = Flask(__name__)
 
@@ -46,3 +46,6 @@ def vm_carbon_emission():
     except Exception as ex:
         print(colored("Error while retrieving report for vm-id: {}, reason: {}".format(vm_id, ex), "red"))
         return "Carbon emission report for vm-id: {} cannot be retrieved at the moment, please try again later.".format(vm_id)
+
+if __name__ == '__main__':
+  app.run(debug = True, host = '0.0.0.0', port=environ.get("PORT", 5000))

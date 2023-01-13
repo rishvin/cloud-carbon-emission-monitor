@@ -1,9 +1,11 @@
 FROM python:3.10.9-slim
+
 ARG port
 
 RUN apt-get update -y
 RUN apt-get install wget -y
-RUN apt-get -y install curl -y
+RUN apt-get install curl -y
+RUN apt-get install python3-pip -y
 RUN apt-get install libgomp1 -y
 RUN apt-get install software-properties-common curl gnupg2 apt-transport-https -y
 RUN wget -O- https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc | apt-key add -
@@ -13,6 +15,9 @@ RUN apt-get install erlang -y
 RUN curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.deb.sh | bash
 RUN apt-get update -y
 RUN apt-get install rabbitmq-server -y
+
+RUN id -u rabbitmq &>/dev/null || useradd -m rabbitmq
+
 
 RUN mkdir -p $HOME
 COPY . $HOME
