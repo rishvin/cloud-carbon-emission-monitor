@@ -16,7 +16,6 @@ RUN apt-get install rabbitmq-server -y
 
 RUN mkdir -p $HOME
 COPY . $HOME
-WORKDIR $HOME
 
 RUN pip install pip --upgrade && pip install -r requirements.txt
 
