@@ -24,4 +24,4 @@ ENV FLASK_APP=src/apps/carbon_emission_app.py
 
 EXPOSE $PORT
 
-CMD ["sh", "-c", "/docker_run"]
+ENTRYPOINT ["sh", "-c", "/docker_run"]
