@@ -1,0 +1,15 @@
+if [ -z "$PORT" ]; then
+  echo 'Please provide $PORT when running the container.'
+  exit 1
+fi
+
+service rabbitmq-server start
+echo "Running storage service." 
+python -m src.services.carbon_emission_storage_service.ephimeral_storage_service &
+sleep 2
+echo "Running VM computer service."
+python -m src.services.carbon_emission_compute_service.vm_compute_service &
+echo "Running analyzer service."
+python -m src.services.carbon_emission_analyzer_service.analyzer_service &
+echo "Running application."
+flask run --port=$PORT
