@@ -48,3 +48,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "rj-cloud-carbon-emission-app"
           heroku_email: "rishab99999@gmail.com"
+          usedocker: true
