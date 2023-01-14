@@ -1,6 +1,0 @@
-rabbitmq_path=$(which rabbitmq-server)
-echo "rabbitmq_path: " $rabbitmq_path
-chown rabbitmq $rabbitmq_path
-service rabbitmq-server start
-sleep 2
-python run_services.py
