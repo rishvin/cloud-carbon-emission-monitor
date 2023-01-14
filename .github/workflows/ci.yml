@@ -41,6 +41,7 @@ jobs:
         pytest src/integration_test/test_carbon_emission_service.py
   deploy:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - uses: actions/checkout@v3
       - uses: akhileshns/heroku-deploy@v3.12.12
