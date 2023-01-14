@@ -2,13 +2,16 @@ import pika
 import json
 import Pyro4
 import sys
+import os
 
 from termcolor import colored
 
 class CabonEmissionAnalyzerService:
     def __init__(self):
         self._queue_name = "carbon_emission_compute_queue"
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters("localhost", 5672))
+        url = os.environ.get('CLOUDAMQP_URL', "amqp://guest:guest@localhost:5672/%2f")
+        params = pika.URLParameters(url)
+        self._connection = pika.BlockingConnection(params)
         self._channel = self._connection.channel()
         self._channel.queue_declare(self._queue_name)
         self._storage_service = Pyro4.Proxy(uri = "PYRO:CarbonEmissionStorageService@localhost:57654")

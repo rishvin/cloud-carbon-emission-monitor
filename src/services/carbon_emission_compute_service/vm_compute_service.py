@@ -6,11 +6,14 @@ import random
 import time
 import threading
 import sys
+import os
 
 class CarbonEmissionComputeServiceInterface:
     def __init__(self):
         self._queue_name = "carbon_emission_compute_queue"
-        self._connection = pika.BlockingConnection(pika.ConnectionParameters("localhost", 5672))
+        url = os.environ.get('CLOUDAMQP_URL', "amqp://guest:guest@localhost:5672/%2f")
+        params = pika.URLParameters(url)
+        self._connection = pika.BlockingConnection(params)
         self._channel = self._connection.channel()
         self._channel.queue_declare(self._queue_name)
     
